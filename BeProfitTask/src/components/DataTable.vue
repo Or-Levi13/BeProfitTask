@@ -1,79 +1,54 @@
 <template>
-    <v-table :items="desserts" :items-per-page="5">
+    <v-table>
         <thead>
             <tr>
-                <th class="text-left">
-                    Name
-                </th>
-                <th class="text-left">
-                    Calories
+                <th v-for="header in tableHeaders" :key="header" class="text-left">
+                    {{ header }}
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="item in desserts" :key="item.name">
+                <td>{{ item.order_ID }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.calories }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                <td>{{ item.total_refunded }}</td>
+                
             </tr>
         </tbody>
     </v-table>
     <div class="text-center">
-    <v-pagination
-      v-model="page"
-      :length="6"
-    ></v-pagination>
-  </div>
+        <v-pagination v-model="page" :length="6"></v-pagination>
+    </div>
 </template>
 
 <script lang="ts">
+import ordersData from '@/data/orders.json';
+
 export default {
-    data () {
-      return {
-        page: 1,
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-        ],
-      }
+    created() {
+        console.log(ordersData.map(item => Object.keys(item))[0]);
+        this.tableHeaders = ordersData.map(item => Object.keys(item))[0].map(item => this.capitalizeFirstLetter(item.replace(/_/g, ' ')));
     },
+    data() {
+        return {
+            tableHeaders: [""],
+            page: 1,
+            desserts: ordersData,
+        }
+    },
+    methods: {
+        capitalizeFirstLetter(string: String) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    }
 }
 </script>
 <style lang="">
